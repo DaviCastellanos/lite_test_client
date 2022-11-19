@@ -14,6 +14,15 @@ export default {
   async deleteBusinessByNit(nit) {
     const response = await businessHandler.deleteRequest("https://lite-test-api.azurewebsites.net/api/DeleteBusinessByNIT?code=" + process.env.VUE_APP_API_MASTER_KEY + "&&NIT=" + nit);
     return response
+  },
+  async createBusiness(business) {
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    console.log(business)
+    const response = await businessHandler.postRequest("https://lite-test-api.azurewebsites.net/api/AddBusiness?code=" + process.env.VUE_APP_API_MASTER_KEY, business, headers);
+    return response
   }
 };
 
