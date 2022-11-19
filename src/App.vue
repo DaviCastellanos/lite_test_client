@@ -28,7 +28,7 @@ export default {
       businessArray: undefined,
       msalConfig: {
         auth: {
-          clientId: 'd9f1b1ab-cedf-49c5-8e95-20114138b95f',
+          clientId: process.env.VUE_APP_CLIENT_ID,
           authority:
             'https://login.microsoftonline.com/fd5ab338-f8b4-4de4-8ecd-2f46a044dad7',
         },
