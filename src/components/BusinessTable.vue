@@ -11,10 +11,11 @@
         <tbody>
             <!-- Loop through the list get the each student data -->
             <tr v-for="item in this.getItems()" :key='item'>
-            <td v-for="field in this.getFields()" :key='field'>{{item[field]}}</td>
+            <td v-for="field in this.getFields()" :key='field' @click="selectBusiness(item['NIT'])">{{item[field]}} </td>
             </tr>
         </tbody>
     </table>
+
 </template>
 
 <script>
@@ -28,9 +29,13 @@ export default {
     businessArray: undefined
   },
   methods: {
+    selectBusiness(nit)
+    {
+        console.log(nit);
+    },
     getFields() {
       return [
-        'NIT', 'Name', 'More'
+        'NIT', 'Name', 'Address', 'Phone'
       ];
     },
     getItems() {
@@ -44,7 +49,8 @@ export default {
           items.push({
             NIT: this.businessArray[i].nit,
             Name: this.businessArray[i].name,
-            More: "+",
+            Address: this.businessArray[i].address,
+            Phone: this.businessArray[i].phone,
           });
         }
       }

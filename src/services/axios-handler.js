@@ -3,10 +3,21 @@
 export class AxiosHandler {
   async getRequest (url) {
     try {
-      //this._cancelPreviousRequest(url)
-      //this._trackCurrentRequest(url)
 
       const response = await axios.get(url)
+      return (response.data && response.data.items) ? response.data.items : response.data
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        // Request was cancelled. No further action required
+      } else
+        throw error
+    }
+  }
+
+  async deleteRequest (url) {
+    try {
+
+      const response = await axios.delete(url)
       return (response.data && response.data.items) ? response.data.items : response.data
     } catch (error) {
       if (axios.isCancel(error)) {

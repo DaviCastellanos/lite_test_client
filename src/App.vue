@@ -7,8 +7,17 @@
 
   </nav>
 
-  <div>
-    <BusinessTable  v-if="this.account" :businessArray="this.businessArray"/>
+  <div v-if="this.account">
+
+    <div>
+      <BusinessTable  :businessArray="this.businessArray"/>
+    </div>
+    <div v-if="isAdmin" class="input-group mb-3">
+      <input type="text" class="form-control" v-model="businessDetails" placeholder="Enter business NIT" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-danger" type="button" @click="this.DeleteBusiness()">Delete</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,6 +35,7 @@ export default {
     return {
       account: undefined,
       businessArray: undefined,
+      buisinessDetails: undefined,
       msalConfig: {
         auth: {
           clientId: process.env.VUE_APP_CLIENT_ID,
@@ -60,12 +70,21 @@ export default {
     }
   },
   methods: {
+    async DeleteBusiness() {
+      const response = await BusinessService.deleteBusinessByNit(this.businessDetails);
+      if (!response) {
+        return;
+      }
+
+      this.GetAllBusiness()
+      this.buisinessDetails = undefined
+    },
     async GetAllBusiness() {
       const response = await BusinessService.getAllBusiness();
       if (!response) {
         return;
       }
-      console.log('response is ', response);
+      //console.log('response is ', response);
       //this.$store.commit('SET_POLICIES', response.features);
       this.businessArray = response
     },
